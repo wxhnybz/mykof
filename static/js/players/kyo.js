@@ -26,6 +26,9 @@ for(let i =0;i<7;i++){
         let obj = outer.animations.get(i)
         obj.frame_cnt = gif.frames.length
         obj.loaded = true
+        if(i===3){
+            obj.frame_rate=3
+        }
     }
 }
 }
