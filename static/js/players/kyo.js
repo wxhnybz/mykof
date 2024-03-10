@@ -26,7 +26,7 @@ for(let i =0;i<7;i++){
         let obj = outer.animations.get(i)
         obj.frame_cnt = gif.frames.length
         obj.loaded = true
-        if(i===3){
+        if(i===3){//调节跳跃时候的帧率渲染,完善游戏画面
             obj.frame_rate=3
         }
     }

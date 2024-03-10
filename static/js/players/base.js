@@ -31,6 +31,12 @@ export class Player extends GameObject{
 
         this.frame_current_cnt = 0
 
+
+        //血量
+        this.hp = 100
+//学一下这个写法
+        this.$hp = this.root.$kof.find(`.kof-head-hp-${this.id}>div`)
+
     }
 
     start(){
@@ -85,15 +91,40 @@ export class Player extends GameObject{
     }
 
     update_move(){
-        if(this.status===3){
             this.vy += this.gravity
-        }
         this.x += this.vx * this.timedelta/1000
         this.y += this.vy* this.timedelta/1000
+//玩家碰撞检测
+        // let [a,b] = this.root.players
+        // if(a!==this) [a,b] = [b,a]
+        // let r1 = {
+        //     x1: a.x,
+        //     y1:a.y,
+        //     x2: a.x+a.width,
+        //     y2:a.y+a.height
+        // }
+        // let r2 = {
+        //     x1: b.x,
+        //     y1:b.y,
+        //     x2: b.x+b.width,
+        //     y2:b.y+b.height
+        // }
+
+        // if(this.is_collision(r1,r2)){
+        //     b.x+=this.vx*this.timedelta/1000 /2
+        //     b.y+= this.vy*this.timedelta/1000
+        //     a.x-= this.vx*this.timedelta/1000 /2
+        //     a.y+=this.vy*this.timedelta/1000 
+
+        //     if(this.status === 3){
+        //         this.status = 0
+        //     }
+        // }
 
         if(this.y>450){
             this.y = 450
             this.vy = 0
+            if(this.status === 3)
             this.status = 0
         }
         if(this.x<0){
@@ -105,6 +136,10 @@ export class Player extends GameObject{
 
 
     update_direction(){
+        //特判,牢牢记住,****
+        if(this.status === 6)
+        return
+
         let players = this.root.players
         if(players[0]&&players[1]){
             let me = this , you = players[1-this.id]
@@ -112,14 +147,95 @@ export class Player extends GameObject{
             else me.direction =-1
         }
     }
+
+
+// 攻击函数
+    updata_attack(){
+        if(this.status === 4&&this.frame_current_cnt===18){
+            // this.status=0;
+            let me = this,you = this.root.players[1-this.id];
+            let r1 ;//攻击范围
+            if(this.direction>0){//赋值对象
+                r1 ={
+                x1: me.x+120,
+                y1: me.y+40,
+                x2:me.x+120+100,
+                y2:me.y+40+20}
+                }else{
+                r1={
+                x1: me.x+me.width-120-100,
+                y1: me.y+40,
+                x2: me.x+me.width-120-100+100,
+                y2: me.y+40+20
+                }
+            }
+
+            let r2//收到攻击范围
+            r2 ={
+                x1: you.x,
+                y1: you.y,
+                x2: you.x+you.width,
+                y2: you.y+you.height
+            }
+            if(this.is_collision(r1,r2)){
+                you.is_attack()
+            }
+        }
+    }
+
+//碰撞检测
+// 水平方向和竖直方向都有交集
+// max(a,c)<min(b,d)
+    is_collision(r1,r2){
+        if(Math.max(r1.x1,r2.x1)>Math.min(r1.x2,r2.x2))
+        return false
+        if(Math.max(r1.y1,r2.y1)>Math.min(r1.y2,r2.y2))
+        return false
+
+        return true //碰撞了
+    }
+
+    is_attack(){
+        //特判,牢牢记住,****
+        if(this.status===6){
+            return
+        }
+
+        this.status = 5
+        this.frame_current_cnt = 0
+        this.hp = Math.max(this.hp-10,0)
+
+        // 血条的渐变效果
+        this.$hp.animate({
+            width:this.$hp.parent().width()*this.hp/100
+        })
+        // this.$hp.width(this.$hp.parent().width()*this.hp /100 )
+
+        if(this.hp<=0){
+            this.status = 6
+            this.frame_current_cnt = 0
+        }
+    }
     update(){
         this.update_control()
         this.update_move()
         this.update_direction()
+        this.updata_attack()
         this.render()
     }
 
     render(){
+
+        this.ctx.fillStyle = 'blue'
+        this.ctx.fillRect(this.x,this.y,this.width,this.height);
+        if(this.direction>0){
+        this.ctx.fillStyle = 'red'
+        this.ctx.fillRect(this.x+120,this.y+35,100,20)}
+        else{
+            this.ctx.fillStyle = 'red'
+            this.ctx.fillRect(this.x-200+this.width-20,this.y+35,100,20)}
+        
+
         // this.ctx.fillStyle = this.color
         // this.ctx.fillRect(this.x,this.y,this.width,this.height)
         let status = this.status
@@ -148,7 +264,13 @@ export class Player extends GameObject{
         }
         if(status ===4 && this.frame_current_cnt===obj.frame_rate*obj.frame_cnt-1){//减少一帧,从0开始,减少卡帧
             this.status = 0
-            
+        }
+        if(status===5&& this.frame_current_cnt===obj.frame_rate*obj.frame_cnt-1){
+            this.status = 0
+        }
+
+        if(status===6 && this.frame_current_cnt===obj.frame_rate*obj.frame_cnt-1){
+            this.frame_current_cnt--
         }
         this.frame_current_cnt++
 

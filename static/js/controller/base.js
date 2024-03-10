@@ -12,7 +12,7 @@ export class Controller{
         })
         this.$canvas.keyup((e)=>{
             outer.pressed_keys.delete(e.key)
-            console.log(outer.pressed_keys)
+            // console.log(outer.pressed_keys)
         })
     }
 
