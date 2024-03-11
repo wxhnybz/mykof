@@ -1,10 +1,14 @@
 #kof {
     width: 1280px;
     height: 720px;
-    background-image: url('/static/images/background/0.gif');
+    background-image: url("../images/background/0.gif");
     background-size: 200% 100%;
     background-position: top;
     position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border:10px black solid
 }
 
 #kof > .kof-head{

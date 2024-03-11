@@ -60,16 +60,16 @@ export class Player extends GameObject{
             d = this.pressed_keys.has('ArrowRight')
             j = this.pressed_keys.has('ArrowDown')
         }
-        if(this.status===3){
-            console.log(this.uped_keys)
-            let double_w = this.uped_keys.has('w')
-            if(double_w){
-                console.log(this.uped_keys)
-            }
+        // if(this.status===3){
+        //     console.log(this.uped_keys)
+        //     let double_w = this.uped_keys.has('w')
+        //     if(double_w){
+        //         console.log(this.uped_keys)
+        //     }
             
 
-            this.uped_keys.clear()
-        }
+        //     this.uped_keys.clear()
+        // }
 
         if(this.status === 0 || this.status === 1 ){
             this.jump_status=true
@@ -245,14 +245,14 @@ export class Player extends GameObject{
 
     render(){
 
-        this.ctx.fillStyle = 'blue'
-        this.ctx.fillRect(this.x,this.y,this.width,this.height);
-        if(this.direction>0){
-        this.ctx.fillStyle = 'red'
-        this.ctx.fillRect(this.x+120,this.y+35,100,20)}
-        else{
-            this.ctx.fillStyle = 'red'
-            this.ctx.fillRect(this.x-200+this.width-20,this.y+35,100,20)}
+        // this.ctx.fillStyle = 'blue'
+        // this.ctx.fillRect(this.x,this.y,this.width,this.height);
+        // if(this.direction>0){
+        // this.ctx.fillStyle = 'red'
+        // this.ctx.fillRect(this.x+120,this.y+35,100,20)}
+        // else{
+        //     this.ctx.fillStyle = 'red'
+        //     this.ctx.fillRect(this.x-200+this.width-20,this.y+35,100,20)}
         
 
         // this.ctx.fillStyle = this.color
