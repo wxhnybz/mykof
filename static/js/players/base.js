@@ -28,6 +28,7 @@ export class Player extends GameObject{
         this.animations = new Map()
 
         this.pressed_keys = this.root.game_map.controller.pressed_keys
+        this.uped_keys = this.root.game_map.controller.uped_keys
 
         this.frame_current_cnt = 0
 
@@ -37,6 +38,8 @@ export class Player extends GameObject{
 //学一下这个写法
         this.$hp = this.root.$kof.find(`.kof-head-hp-${this.id}>div`)
         this.$hp_div = this.$hp.find('div')
+        // 二连跳
+        this.jump_status = true
 
     }
 
@@ -57,8 +60,19 @@ export class Player extends GameObject{
             d = this.pressed_keys.has('ArrowRight')
             j = this.pressed_keys.has('ArrowDown')
         }
+        if(this.status===3){
+            console.log(this.uped_keys)
+            let double_w = this.uped_keys.has('w')
+            if(double_w){
+                console.log(this.uped_keys)
+            }
+            
 
-        if(this.status === 0 || this.status === 1){
+            this.uped_keys.clear()
+        }
+
+        if(this.status === 0 || this.status === 1 ){
+            this.jump_status=true
             if(j){
                 this.status= 4
                 this.vx = 0
