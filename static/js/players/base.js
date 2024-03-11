@@ -36,6 +36,7 @@ export class Player extends GameObject{
         this.hp = 100
 //学一下这个写法
         this.$hp = this.root.$kof.find(`.kof-head-hp-${this.id}>div`)
+        this.$hp_div = this.$hp.find('div')
 
     }
 
@@ -208,7 +209,10 @@ export class Player extends GameObject{
         // 血条的渐变效果
         this.$hp.animate({
             width:this.$hp.parent().width()*this.hp/100
-        })
+        },600)
+        this.$hp_div.animate({
+            width:this.$hp.parent().width()*this.hp/100
+        },300)
         // this.$hp.width(this.$hp.parent().width()*this.hp /100 )
 
         if(this.hp<=0){

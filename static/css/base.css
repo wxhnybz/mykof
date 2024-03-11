@@ -57,12 +57,26 @@ box-sizing: border-box;
 
 #kof>.kof-head> .kof-head-hp-0>div{
     float: right;
-background-color: red;
+background-color: green;
 height: 100%;
 width: 100%;
 }
 
 #kof>.kof-head> .kof-head-hp-1>div{
+    background-color:green;
+height: 100%;
+width: 100%;
+
+}
+/* 这是血条里面的div,浮动于外面的div的上面,所以血条变化的时候应该先变化里面的div在变化上面的div */
+#kof>.kof-head> .kof-head-hp-0>div>div{
+    float: right;
+background-color:red;
+height: 100%;
+width: 100%;
+}
+
+#kof>.kof-head> .kof-head-hp-1>div>div{
     background-color: red;
 height: 100%;
 width: 100%;
