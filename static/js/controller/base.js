@@ -8,7 +8,7 @@ export class Controller{
         let outer = this
         this.$canvas.keydown((e)=>{
             outer.pressed_keys.add(e.key)
-            console.log(outer.pressed_keys)
+            // console.log(outer.pressed_keys)
         })
         this.$canvas.keyup((e)=>{
             outer.pressed_keys.delete(e.key)

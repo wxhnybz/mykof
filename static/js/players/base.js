@@ -18,7 +18,7 @@ export class Player extends GameObject{
         this.vy = 0
 
         this.speed = 400 //移动速度
-        this.jump_speed = -1000  //跳跃初始速度
+        this.jump_speed = -1200  //跳跃初始速度
 
         this.gravity = 50 //重力
 
@@ -218,6 +218,7 @@ export class Player extends GameObject{
         if(this.hp<=0){
             this.status = 6
             this.frame_current_cnt = 0
+            this.vx = 0
         }
     }
     update(){
